@@ -7,14 +7,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
   :root {
     --rose: #d4737d;
     --deep-rose: #a83a45;
     --text: #f0c0c5;
     --gold: #c4956a;
   }
-
   html, body {
     width: 100%; min-height: 100vh;
     background: #1a0810;
@@ -22,7 +20,6 @@
     color: var(--text);
     overflow-x: hidden;
   }
-
   #splash {
     position: fixed; inset: 0; z-index: 999;
     background: linear-gradient(135deg, #1a0810 0%, #2a1018 50%, #1a080e 100%);
@@ -36,22 +33,17 @@
   .splash-title {
     font-family: "Dancing Script", cursive;
     font-size: clamp(2rem, 6vw, 3.5rem);
-    color: var(--rose);
-    margin: 1rem 0 0.5rem;
-    text-align: center;
-    text-shadow: 0 0 30px #a83a4560;
+    color: var(--rose); margin: 1rem 0 0.5rem;
+    text-align: center; text-shadow: 0 0 30px #a83a4560;
   }
   .splash-hint {
     font-size: 1rem; color: #a06070;
     letter-spacing: 0.15em; text-transform: uppercase;
     animation: blink 2s infinite;
   }
-
   @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-
   #petals { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
-
   body::before {
     content: "";
     position: fixed; inset: 0; z-index: -1;
@@ -60,7 +52,6 @@
       radial-gradient(ellipse at 80% 80%, #2a080e88 0%, transparent 60%),
       linear-gradient(160deg, #1a0810 0%, #220d14 50%, #1a080e 100%);
   }
-
   main {
     position: relative; z-index: 1;
     display: flex; flex-direction: column;
@@ -68,7 +59,6 @@
     padding: 3rem 1.5rem 6rem;
     gap: 2.5rem;
   }
-
   .header { text-align: center; }
   .header-sub { font-size: 0.85rem; letter-spacing: 0.3em; text-transform: uppercase; color: #a06070; margin-bottom: 0.5rem; }
   .header-title {
@@ -79,18 +69,15 @@
   }
   .header-heart { display: inline-block; animation: pulse 1.5s infinite; }
   .header-tagline { font-style: italic; font-size: 1.15rem; color: var(--gold); margin-top: 0.5rem; }
-
   .divider { display: flex; align-items: center; gap: 1rem; width: 100%; max-width: 400px; }
   .divider-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, #a83a4560, transparent); }
   .divider-icon { color: var(--rose); font-size: 1.2rem; }
-
   .timer-card {
     background: rgba(40,10,18,0.7);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(168,58,69,0.3);
-    border-radius: 24px;
-    padding: 2.5rem 2rem; text-align: center;
-    width: 100%; max-width: 480px;
+    border-radius: 24px; padding: 2.5rem 2rem;
+    text-align: center; width: 100%; max-width: 480px;
     box-shadow: 0 8px 40px rgba(168,58,69,0.15), inset 0 1px 0 rgba(255,255,255,0.05);
   }
   .timer-label { font-size: 0.8rem; letter-spacing: 0.25em; text-transform: uppercase; color: #a06070; margin-bottom: 1.5rem; }
@@ -104,44 +91,6 @@
   }
   .timer-unit-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: #a06070; }
   .timer-date { font-style: italic; font-size: 0.95rem; color: var(--gold); margin-top: 0.5rem; }
-
-  .music-card {
-    background: rgba(40,10,18,0.7);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(168,58,69,0.3);
-    border-radius: 20px; padding: 1.5rem 2rem;
-    width: 100%; max-width: 480px;
-    box-shadow: 0 8px 40px rgba(168,58,69,0.1);
-    display: flex; flex-direction: column; align-items: center; gap: 1rem;
-  }
-  .music-title { font-family: "Dancing Script", cursive; font-size: 1.4rem; color: var(--rose); }
-  .music-controls { display: flex; align-items: center; gap: 1.2rem; }
-  .music-btn {
-    width: 52px; height: 52px; border-radius: 50%; border: none; cursor: pointer;
-    background: linear-gradient(135deg, var(--deep-rose), #c0526a);
-    color: white; font-size: 1.3rem;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 4px 20px rgba(168,58,69,0.5);
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .music-btn:hover { transform: scale(1.08); }
-  .music-waveform { display: flex; align-items: center; gap: 3px; height: 28px; }
-  .wave-bar {
-    width: 4px; border-radius: 4px;
-    background: linear-gradient(to top, var(--deep-rose), var(--rose));
-    animation: wave 1s ease-in-out infinite; transform-origin: bottom;
-  }
-  .wave-bar:nth-child(1){ height:10px; animation-delay:0s; }
-  .wave-bar:nth-child(2){ height:20px; animation-delay:0.1s; }
-  .wave-bar:nth-child(3){ height:14px; animation-delay:0.2s; }
-  .wave-bar:nth-child(4){ height:24px; animation-delay:0.15s; }
-  .wave-bar:nth-child(5){ height:18px; animation-delay:0.05s; }
-  .wave-bar:nth-child(6){ height:10px; animation-delay:0.25s; }
-  .wave-bar:nth-child(7){ height:22px; animation-delay:0.1s; }
-  .wave-bar.paused { animation-play-state: paused; }
-  @keyframes wave { 0%,100%{transform:scaleY(1)} 50%{transform:scaleY(0.4)} }
-  .music-status { font-size: 0.8rem; color: #a06070; letter-spacing: 0.1em; }
-
   .quote-card {
     background: rgba(40,10,18,0.5);
     border-left: 3px solid var(--deep-rose);
@@ -150,7 +99,6 @@
   }
   .quote-text { font-style: italic; font-size: 1.1rem; color: var(--text); line-height: 1.7; }
   .quote-author { font-size: 0.85rem; color: var(--gold); margin-top: 0.5rem; text-align: right; }
-
   .floating-hearts { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
   .fheart {
     position: absolute; bottom: -40px; font-size: 1.2rem; opacity: 0;
@@ -161,7 +109,6 @@
     10%{opacity:0.5;} 90%{opacity:0.2;}
     100%{transform:translateY(-110vh) rotate(30deg);opacity:0;}
   }
-
   footer { position: relative; z-index: 1; text-align: center; padding: 2rem; font-style: italic; color: #a06070; font-size: 0.9rem; }
 </style>
 </head>
@@ -182,13 +129,11 @@
     <h1 class="header-title">Yamin <span class="header-heart">❤️</span> Kajol</h1>
     <p class="header-tagline">Every moment with you is a treasure</p>
   </div>
-
   <div class="divider">
     <div class="divider-line"></div>
     <div class="divider-icon">🌸</div>
     <div class="divider-line"></div>
   </div>
-
   <div class="timer-card">
     <p class="timer-label">We have been together for</p>
     <div class="timer-grid">
@@ -203,31 +148,11 @@
     </div>
     <p class="timer-date">Since August 8, 2025 🌹</p>
   </div>
-
-  <div class="music-card">
-    <div class="music-title">🎵 Our Song</div>
-    <div class="music-controls">
-      <div class="music-waveform">
-        <div class="wave-bar paused"></div><div class="wave-bar paused"></div><div class="wave-bar paused"></div>
-        <div class="wave-bar paused"></div><div class="wave-bar paused"></div><div class="wave-bar paused"></div>
-        <div class="wave-bar paused"></div>
-      </div>
-      <button class="music-btn" id="playBtn" onclick="toggleMusic()">▶</button>
-      <div class="music-waveform">
-        <div class="wave-bar paused"></div><div class="wave-bar paused"></div><div class="wave-bar paused"></div>
-        <div class="wave-bar paused"></div><div class="wave-bar paused"></div><div class="wave-bar paused"></div>
-        <div class="wave-bar paused"></div>
-      </div>
-    </div>
-    <p class="music-status" id="musicStatus">Click ▶ to play music 🎶</p>
-  </div>
-
   <div class="divider">
     <div class="divider-line"></div>
     <div class="divider-icon">🌸</div>
     <div class="divider-line"></div>
   </div>
-
   <div class="quote-card">
     <p class="quote-text">"You are my today and all of my tomorrows."</p>
     <p class="quote-author">— Leo Christopher</p>
@@ -237,92 +162,10 @@
 <footer>Made with love, for always 🌹</footer>
 
 <script>
-// ── SPLASH ──
 document.getElementById("splash").addEventListener("click", () => {
   document.getElementById("splash").classList.add("hide");
-  startMusic();
 });
 
-// ── MUSIC via Web Audio API (soft generated tones) ──
-let audioCtx = null;
-let playing = false;
-let gainNode = null;
-let oscillators = [];
-let musicInterval = null;
-
-const notes = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25];
-const melody = [0,2,4,7,4,2,0,4,2,0,4,7,9,7,4,2];
-let noteIdx = 0;
-
-function startMusic() {
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    gainNode = audioCtx.createGain();
-    gainNode.gain.setValueAtTime(0.08, audioCtx.currentTime);
-    gainNode.connect(audioCtx.destination);
-  }
-  if (audioCtx.state === "suspended") audioCtx.resume();
-  playing = true;
-  updateMusicUI();
-  playNextNote();
-}
-
-function playNextNote() {
-  if (!playing) return;
-  const freq = notes[melody[noteIdx % melody.length]];
-  noteIdx++;
-
-  const osc = audioCtx.createOscillator();
-  const env = audioCtx.createGain();
-  osc.type = "sine";
-  osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-  env.gain.setValueAtTime(0, audioCtx.currentTime);
-  env.gain.linearRampToValueAtTime(0.15, audioCtx.currentTime + 0.1);
-  env.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.9);
-  osc.connect(env);
-  env.connect(gainNode);
-  osc.start(audioCtx.currentTime);
-  osc.stop(audioCtx.currentTime + 0.9);
-
-  // Also play soft harmony
-  const osc2 = audioCtx.createOscillator();
-  const env2 = audioCtx.createGain();
-  osc2.type = "sine";
-  osc2.frequency.setValueAtTime(freq * 1.5, audioCtx.currentTime);
-  env2.gain.setValueAtTime(0, audioCtx.currentTime);
-  env2.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 0.1);
-  env2.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.8);
-  osc2.connect(env2);
-  env2.connect(gainNode);
-  osc2.start(audioCtx.currentTime);
-  osc2.stop(audioCtx.currentTime + 0.8);
-
-  musicInterval = setTimeout(playNextNote, 700);
-}
-
-function stopMusic() {
-  playing = false;
-  clearTimeout(musicInterval);
-  updateMusicUI();
-}
-
-function toggleMusic() {
-  if (playing) {
-    stopMusic();
-  } else {
-    startMusic();
-  }
-}
-
-function updateMusicUI() {
-  document.getElementById("playBtn").textContent = playing ? "⏸" : "▶";
-  document.getElementById("musicStatus").textContent = playing ? "♪ Playing soft melody..." : "Click ▶ to play music 🎶";
-  document.querySelectorAll(".wave-bar").forEach(b => {
-    if (playing) b.classList.remove("paused"); else b.classList.add("paused");
-  });
-}
-
-// ── COUNTDOWN ──
 function updateTimer() {
   const start = new Date("2025-08-08T00:00:00");
   const now = new Date();
@@ -346,7 +189,6 @@ function updateTimer() {
 updateTimer();
 setInterval(updateTimer, 1000);
 
-// ── FLOATING HEARTS ──
 const heartEmojis = ["❤️","🌸","💕","🌹","💖","✨","🩷"];
 function spawnHeart() {
   const h = document.createElement("div");
@@ -363,7 +205,6 @@ function spawnHeart() {
 setInterval(spawnHeart, 800);
 for(let i=0;i<8;i++) setTimeout(spawnHeart, i*300);
 
-// ── PETALS ──
 const canvas = document.getElementById("petals");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth; canvas.height = window.innerHeight;
