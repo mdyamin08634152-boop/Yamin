@@ -19,7 +19,18 @@
     font-family: "Cormorant Garamond", serif;
     color: var(--text);
     overflow-x: hidden;
+    transition: background 1.5s ease;
   }
+
+  /* ===== CELEBRATION MODE — auto-applied on anniversary day ===== */
+  /* Overrides the same CSS variables used everywhere else, so the whole
+     page re-skins itself without touching any of the original rules. */
+  body.celebrate {
+    --rose: #ff9fb5;
+    --deep-rose: #ff6f91;
+    --gold: #ffd699;
+  }
+
   #splash {
     position: fixed; inset: 0; z-index: 999;
     background: linear-gradient(135deg, #1a0810 0%, #2a1018 50%, #1a080e 100%);
@@ -51,6 +62,13 @@
       radial-gradient(ellipse at 20% 20%, #3a101888 0%, transparent 60%),
       radial-gradient(ellipse at 80% 80%, #2a080e88 0%, transparent 60%),
       linear-gradient(160deg, #1a0810 0%, #220d14 50%, #1a080e 100%);
+    transition: background 1.5s ease;
+  }
+  body.celebrate::before {
+    background:
+      radial-gradient(ellipse at 20% 20%, #ff6f9155 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, #ffd69940 0%, transparent 60%),
+      linear-gradient(160deg, #2a0f1a 0%, #3a1420 50%, #260d16 100%);
   }
   main {
     position: relative; z-index: 1;
@@ -110,6 +128,94 @@
     100%{transform:translateY(-110vh) rotate(30deg);opacity:0;}
   }
   footer { position: relative; z-index: 1; text-align: center; padding: 2rem; font-style: italic; color: #a06070; font-size: 0.9rem; }
+
+  /* ===== NEW: Upcoming Anniversary countdown card ===== */
+  .upcoming-card {
+    background: rgba(40,10,18,0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(196,149,106,0.35);
+    border-radius: 24px; padding: 2.2rem 2rem;
+    text-align: center; width: 100%; max-width: 480px;
+    box-shadow: 0 8px 40px rgba(196,149,106,0.15), inset 0 1px 0 rgba(255,255,255,0.05);
+    transition: all 1.5s ease;
+  }
+  body.celebrate .upcoming-card {
+    border-color: rgba(255,214,153,0.6);
+    box-shadow: 0 8px 50px rgba(255,111,145,0.35), inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+  .upcoming-label {
+    font-size: 0.8rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.3rem;
+  }
+  .upcoming-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
+  .upcoming-unit { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
+  .upcoming-num {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(1.8rem, 5.5vw, 2.8rem); font-weight: 300;
+    color: var(--gold); line-height: 1; min-width: 2ch; text-align: center;
+    text-shadow: 0 0 20px #c4956a40;
+  }
+  .upcoming-unit-label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: #a06070; }
+  .upcoming-target { font-style: italic; font-size: 0.9rem; color: var(--rose); margin-top: 1rem; }
+
+  /* Celebration banner — replaces the countdown on the day itself */
+  .celebrate-banner { display: none; }
+  .celebrate-banner.show {
+    display: block;
+    animation: pop-in 0.7s ease-out;
+  }
+  .celebrate-banner .badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--deep-rose), var(--gold));
+    color: #1a0810;
+    padding: 0.7rem 1.8rem;
+    border-radius: 999px;
+    font-family: "Dancing Script", cursive;
+    font-size: 1.5rem;
+    font-weight: 600;
+    box-shadow: 0 0 30px rgba(255,111,145,0.5);
+    animation: glow-pulse 2s ease-in-out infinite;
+  }
+  .celebrate-banner .sub {
+    margin-top: 0.9rem;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--text);
+  }
+  @keyframes pop-in {
+    0% { transform: scale(0.3); opacity: 0; }
+    70% { transform: scale(1.08); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  @keyframes glow-pulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(255,111,145,0.4); }
+    50% { box-shadow: 0 0 40px rgba(255,111,145,0.8); }
+  }
+
+  /* ===== NEW: First Date photo card ===== */
+  .photo-card {
+    background: rgba(40,10,18,0.6);
+    border: 1px solid rgba(168,58,69,0.3);
+    border-radius: 24px;
+    padding: 1.8rem;
+    text-align: center;
+    width: 100%; max-width: 320px;
+  }
+  .photo-frame {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 2px solid rgba(212,115,125,0.4);
+    box-shadow: 0 0 25px rgba(168,58,69,0.25);
+    background: rgba(255,255,255,0.03);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo-placeholder { color: #a06070; font-size: 0.85rem; padding: 20px; line-height: 1.5; }
+  .photo-placeholder span { font-size: 2rem; display: block; margin-bottom: 8px; }
+  .photo-caption { margin-top: 1rem; font-family: "Dancing Script", cursive; font-size: 1.3rem; color: var(--rose); }
+  .photo-caption .date { display: block; font-family: "Cormorant Garamond", serif; color: var(--gold); font-size: 0.8rem; letter-spacing: 0.1em; margin-top: 0.3rem; font-style: italic; }
 </style>
 </head>
 <body>
@@ -148,11 +254,58 @@
     </div>
     <p class="timer-date">Since August 8, 2025 🌹</p>
   </div>
+
   <div class="divider">
     <div class="divider-line"></div>
     <div class="divider-icon">🌸</div>
     <div class="divider-line"></div>
   </div>
+
+  <!-- ===== NEW: Upcoming Anniversary countdown / celebration banner ===== -->
+  <div class="upcoming-card">
+    <div id="upcomingSection">
+      <p class="upcoming-label" id="upcomingLabel">Upcoming 1st Anniversary</p>
+      <div class="upcoming-grid">
+        <div class="upcoming-unit"><span class="upcoming-num" id="u-days">--</span><span class="upcoming-unit-label">Days</span></div>
+        <div class="upcoming-unit"><span class="upcoming-num" id="u-hours">--</span><span class="upcoming-unit-label">Hours</span></div>
+        <div class="upcoming-unit"><span class="upcoming-num" id="u-mins">--</span><span class="upcoming-unit-label">Min</span></div>
+        <div class="upcoming-unit"><span class="upcoming-num" id="u-secs">--</span><span class="upcoming-unit-label">Sec</span></div>
+      </div>
+      <p class="upcoming-target" id="upcomingTarget">August 8, 2026</p>
+    </div>
+
+    <div class="celebrate-banner" id="celebrateBanner">
+      <div class="badge" id="celebrateBadge">🎉 Happy 1st Anniversary! 🎉</div>
+      <p class="sub">A whole year of us. Here's to forever, Kajol 💗</p>
+    </div>
+  </div>
+
+  <!-- ===== NEW: First Date photo card ===== -->
+  <div class="photo-card">
+    <div class="photo-frame" id="photoFrame">
+      <!--
+        HOW TO ADD YOUR PHOTO:
+        1. Upload your image into the repo (e.g. an "images" folder), e.g. images/first-date.jpg
+        2. Replace the <div class="photo-placeholder"> block below with:
+           <img src="images/first-date.jpg" alt="Our First Date">
+      -->
+      <div class="photo-placeholder">
+        <span>📷</span>
+        Add your first date photo here
+      </div>
+    </div>
+    <div class="photo-caption">
+      Our First Date
+      <span class="date">April 13, 2026</span>
+    </div>
+  </div>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-icon">🌸</div>
+    <div class="divider-line"></div>
+  </div>
+
   <div class="quote-card">
     <p class="quote-text">"You are my today and all of my tomorrows."</p>
     <p class="quote-author">— Leo Christopher</p>
@@ -231,6 +384,64 @@ function animPetals() {
   requestAnimationFrame(animPetals);
 }
 animPetals();
+
+/* ===== NEW: Upcoming Anniversary countdown + celebration day mode ===== */
+function ordinal(n) {
+  const s = ["th","st","nd","rd"];
+  const v = n % 100;
+  return n + (s[(v-20)%10] || s[v] || s[0]);
+}
+
+const relStart = new Date("2025-08-08T00:00:00");
+const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+function updateAnniversary() {
+  const now = new Date();
+
+  // find this year's Aug 8 window, roll to next year if already passed
+  let targetYear = now.getFullYear();
+  let target = new Date(targetYear, 7, 8, 0, 0, 0);
+  let targetEnd = new Date(targetYear, 7, 9, 0, 0, 0);
+  if (now >= targetEnd) {
+    targetYear += 1;
+    target = new Date(targetYear, 7, 8, 0, 0, 0);
+    targetEnd = new Date(targetYear, 7, 9, 0, 0, 0);
+  }
+  const annivNumber = targetYear - relStart.getFullYear();
+  const isCelebrationDay = now >= target && now < targetEnd;
+
+  const upcomingSection = document.getElementById("upcomingSection");
+  const celebrateBanner = document.getElementById("celebrateBanner");
+  const celebrateBadge = document.getElementById("celebrateBadge");
+
+  if (isCelebrationDay) {
+    document.body.classList.add("celebrate");
+    upcomingSection.style.display = "none";
+    celebrateBanner.classList.add("show");
+    celebrateBadge.textContent = `🎉 Happy ${ordinal(annivNumber)} Anniversary! 🎉`;
+    return;
+  }
+
+  document.body.classList.remove("celebrate");
+  upcomingSection.style.display = "block";
+  celebrateBanner.classList.remove("show");
+
+  document.getElementById("upcomingLabel").textContent = `Upcoming ${ordinal(annivNumber)} Anniversary`;
+  document.getElementById("upcomingTarget").textContent = `${monthNames[target.getMonth()]} ${target.getDate()}, ${target.getFullYear()}`;
+
+  const diff = target - now;
+  const days = Math.floor(diff / (1000*60*60*24));
+  const hours = Math.floor((diff / (1000*60*60)) % 24);
+  const mins = Math.floor((diff / (1000*60)) % 60);
+  const secs = Math.floor((diff / 1000) % 60);
+
+  document.getElementById("u-days").textContent = days;
+  document.getElementById("u-hours").textContent = String(hours).padStart(2,"0");
+  document.getElementById("u-mins").textContent = String(mins).padStart(2,"0");
+  document.getElementById("u-secs").textContent = String(secs).padStart(2,"0");
+}
+updateAnniversary();
+setInterval(updateAnniversary, 1000);
 </script>
 </body>
 </html>
