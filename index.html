@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,617 +5,620 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Yamin & Kajol — A Letter</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Special+Elite&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Special+Elite&display=swap');
+:root{
+--parchment:#efe3c7; --parchment-dark:#e2d3ab; --paper-shadow:#c9b787;
+--ink:#3b2a1a; --ink-soft:#6b5a42;
+--wax:#7a1f2b; --wax-dark:#5c1620;
+--sage:#6b7c5a; --gold-leaf:#a8783f;
+--tape:#e8dcc0;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{ scroll-behavior:smooth; }
+body{
+background:
+radial-gradient(ellipse at 20% 10%, rgba(255,255,255,0.15), transparent 40%),
+radial-gradient(ellipse at 80% 90%, rgba(0,0,0,0.08), transparent 50%),
+linear-gradient(180deg, var(--parchment), var(--parchment-dark));
+color:var(--ink); font-family:'EB Garamond', serif; overflow-x:hidden;
+}
+body.no-scroll{ overflow:hidden; height:100vh; }
+body::before{
+content:''; position:fixed; inset:0; pointer-events:none; z-index:1; opacity:.5;
+background-image: repeating-linear-gradient(0deg, rgba(0,0,0,0.015) 0px, transparent 1px, transparent 2px),
+repeating-linear-gradient(90deg, rgba(0,0,0,0.015) 0px, transparent 1px, transparent 2px);
+}
+#ribbon{
+position:fixed; top:0; right:18px; width:26px; height:100vh; z-index:60; pointer-events:none;
+}
+#ribbon-fill{
+position:absolute; top:0; left:0; width:100%; background:linear-gradient(180deg,var(--wax),var(--wax-dark));
+box-shadow:1px 0 4px rgba(0,0,0,0.3); transition:height .1s linear;
+clip-path: polygon(0 0, 100% 0, 100% 92%, 50% 100%, 0 92%);
+}
+nav{ position:fixed; top:14px; left:0; right:60px; z-index:55; display:flex; justify-content:center; gap:26px;
+font-family:'Special Elite', monospace; font-size:11px; letter-spacing:1px; }
+nav a{ color:var(--ink-soft); text-decoration:none; opacity:.65; transition:.3s; border-bottom:1px dotted transparent; cursor:pointer; }
+nav a.active{ opacity:1; color:var(--wax); border-color:var(--wax); }
 
-  :root{
-    --parchment:#efe3c7; --parchment-dark:#e2d3ab; --paper-shadow:#c9b787;
-    --ink:#3b2a1a; --ink-soft:#6b5a42;
-    --wax:#7a1f2b; --wax-dark:#5c1620;
-    --sage:#6b7c5a; --gold-leaf:#a8783f;
-    --tape:#e8dcc0;
-  }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html{ scroll-behavior:smooth; }
-  body{
-    background:
-      radial-gradient(ellipse at 20% 10%, rgba(255,255,255,0.15), transparent 40%),
-      radial-gradient(ellipse at 80% 90%, rgba(0,0,0,0.08), transparent 50%),
-      linear-gradient(180deg, var(--parchment), var(--parchment-dark));
-    color:var(--ink); font-family:'EB Garamond', serif; overflow-x:hidden;
-  }
+/* ===== TAP TO ENTER OVERLAY ===== */
+#tapOverlay{
+position:fixed; inset:0; z-index:200;
+display:flex; flex-direction:column; align-items:center; justify-content:center;
+background:
+radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.18), transparent 45%),
+linear-gradient(180deg, var(--parchment), var(--parchment-dark));
+transition:opacity .9s ease, visibility .9s ease;
+cursor:pointer;
+}
+#tapOverlay.hide{ opacity:0; visibility:hidden; pointer-events:none; }
+.tap-seal{ width:96px; height:96px; border-radius:50%; margin-bottom:22px;
+background:radial-gradient(circle at 35% 30%, #9c2c3a, var(--wax) 60%, var(--wax-dark) 100%);
+box-shadow:0 6px 18px rgba(0,0,0,0.35), inset 0 0 20px rgba(0,0,0,0.3);
+display:flex; align-items:center; justify-content:center;
+animation:sealPulse 2.4s ease-in-out infinite; }
+.tap-seal::before{ content:'♥'; font-size:38px; color:#e8c9a8; text-shadow:0 1px 2px rgba(0,0,0,0.4); }
+.tap-text{ font-family:'Special Elite',monospace; font-size:12px; letter-spacing:3px; text-transform:uppercase;
+color:var(--ink-soft); animation:tapFade 1.8s ease-in-out infinite; }
+.tap-sub{ font-family:'Dancing Script',cursive; font-size:26px; color:var(--wax); margin-bottom:10px; }
+@keyframes tapFade{ 0%,100%{ opacity:.5; } 50%{ opacity:1; } }
 
-  /* subtle paper grain */
-  body::before{
-    content:''; position:fixed; inset:0; pointer-events:none; z-index:1; opacity:.5;
-    background-image: repeating-linear-gradient(0deg, rgba(0,0,0,0.015) 0px, transparent 1px, transparent 2px),
-                       repeating-linear-gradient(90deg, rgba(0,0,0,0.015) 0px, transparent 1px, transparent 2px);
-  }
+.hero{ min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+position:relative; z-index:2; padding:80px 20px 40px; text-align:center; }
+.seal{ width:110px; height:110px; border-radius:50%; position:relative; margin-bottom:26px;
+background:radial-gradient(circle at 35% 30%, #9c2c3a, var(--wax) 60%, var(--wax-dark) 100%);
+box-shadow:0 6px 18px rgba(0,0,0,0.35), inset 0 0 20px rgba(0,0,0,0.3);
+display:flex; align-items:center; justify-content:center;
+animation:sealPulse 3s ease-in-out infinite;
+}
+.seal::before{ content:'♥'; font-size:44px; color:#e8c9a8; text-shadow:0 1px 2px rgba(0,0,0,0.4); }
+@keyframes sealPulse{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.04); } }
+.eyebrow{ font-family:'Special Elite', monospace; font-size:11px; letter-spacing:3px; text-transform:uppercase;
+color:var(--gold-leaf); margin-bottom:10px; }
+h1.names{ font-family:'Dancing Script', cursive; font-weight:700; font-size:clamp(46px,11vw,80px); color:var(--wax); line-height:1; }
+.since{ font-style:italic; opacity:.75; margin-top:10px; font-size:16px; }
+.timer-letter{ margin-top:40px; max-width:480px; width:100%; background:rgba(255,255,255,0.35);
+border:1px solid var(--paper-shadow); border-radius:4px; padding:28px 20px;
+box-shadow:0 8px 24px rgba(59,42,26,0.15); position:relative; }
+.timer-letter::before{ content:''; position:absolute; top:-10px; left:50%; transform:translateX(-50%) rotate(-3deg);
+width:70px; height:22px; background:var(--tape); opacity:.8; box-shadow:0 2px 4px rgba(0,0,0,0.15); }
+.timer-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+@media (max-width:420px){ .timer-grid{grid-template-columns:repeat(2,1fr); row-gap:20px;} }
+.t-unit .num{ font-family:'Dancing Script',cursive; font-weight:700; font-size:clamp(28px,6vw,40px); color:var(--wax); }
+.t-unit .lab{ font-family:'Special Elite',monospace; font-size:9px; letter-spacing:1.5px; text-transform:uppercase; opacity:.65; margin-top:2px; }
+.milestone{ margin-top:20px; font-style:italic; font-size:16px; color:var(--ink-soft); }
+.scroll-hint{ margin-top:44px; font-family:'Special Elite',monospace; font-size:10px; letter-spacing:2px; opacity:.5; }
+.page{ position:relative; z-index:2; max-width:640px; margin:0 auto; padding:90px 24px 90px; }
+.page-sheet{ background:rgba(255,255,255,0.4); border:1px solid var(--paper-shadow); border-radius:3px;
+padding:36px 26px; box-shadow:0 10px 30px rgba(59,42,26,0.18);
+position:relative;
+}
+.page-sheet::after{ content:''; position:absolute; left:0; top:0; bottom:0; width:6px;
+background:repeating-linear-gradient(180deg, var(--gold-leaf) 0 8px, transparent 8px 16px); opacity:.5; }
+.chapter-label{ font-family:'Special Elite',monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase;
+color:var(--gold-leaf); text-align:center; margin-bottom:6px; }
+.chapter-title{ font-family:'Dancing Script',cursive; font-weight:700; font-size:clamp(30px,6vw,42px);
+color:var(--wax); text-align:center; margin-bottom:6px; }
+.chapter-sub{ text-align:center; font-style:italic; opacity:.7; margin-bottom:30px; }
+.lock-box{ max-width:340px; margin:0 auto; text-align:center; padding:20px 0; }
+.lock-box p{ font-family:'Special Elite',monospace; font-size:11px; letter-spacing:1px; opacity:.7; margin-bottom:16px; }
+.lock-box input{ background:rgba(255,255,255,0.6); border:1px solid var(--paper-shadow); color:var(--ink);
+padding:11px 16px; border-radius:2px; text-align:center; letter-spacing:8px; font-size:17px; width:140px; outline:none; }
+.lock-box button{ margin-left:8px; background:var(--wax); border:none; color:#f4ecd8; font-family:'Special Elite',monospace;
+font-size:11px; letter-spacing:1px; padding:12px 18px; border-radius:2px; cursor:pointer; }
+.carousel{ display:none; }
+.carousel.active{ display:block; }
+.polaroid{ background:#fdfaf2; padding:14px 14px 46px; box-shadow:0 6px 16px rgba(0,0,0,0.2);
+max-width:340px; margin:10px auto 0; position:relative; transform:rotate(-1.5deg); transition:transform .2s; }
+.polaroid:nth-of-type(even){ transform:rotate(1.5deg); }
+.polaroid img{ width:100%; display:block; filter:sepia(0.15) contrast(1.03); }
+.polaroid-caption{ font-family:'Dancing Script',cursive; font-size:19px; text-align:center; margin-top:12px; color:var(--ink-soft); }
+.polaroid::before{ content:''; position:absolute; top:-8px; left:50%; transform:translateX(-50%) rotate(2deg);
+width:60px; height:18px; background:var(--tape); opacity:.85; }
+.carousel-nav{ display:flex; justify-content:center; gap:16px; margin-top:18px; }
+.carousel-nav button{ background:transparent; border:1px solid var(--paper-shadow); color:var(--wax);
+width:36px; height:36px; border-radius:50%; cursor:pointer; font-size:15px; font-family:serif; }
+.anniv-box{ text-align:center; padding:16px 0 26px; border-bottom:1px dashed var(--paper-shadow); margin-bottom:26px; }
+.anniv-label{ font-family:'Special Elite',monospace; font-size:10px; letter-spacing:2px; text-transform:uppercase; opacity:.65; }
+.anniv-big{ font-family:'Dancing Script',cursive; font-weight:700; font-size:clamp(30px,7vw,44px); color:var(--wax); }
+.anniv-small{ font-style:italic; opacity:.7; font-size:14px; margin-top:4px; }
+.quote-line{ font-family:'Dancing Script',cursive; font-size:22px; text-align:center; color:var(--ink); margin:22px 0 4px; line-height:1.4; }
+.quote-author{ text-align:center; font-family:'Special Elite',monospace; font-size:10px; letter-spacing:1.5px;
+text-transform:uppercase; opacity:.6; margin-bottom:22px; }
+.signature{ margin-top:34px; text-align:right; font-family:'Dancing Script',cursive; font-size:26px; color:var(--wax); }
+.signature small{ display:block; font-family:'EB Garamond',serif; font-size:14px; font-style:italic; opacity:.7; margin-top:4px; }
 
-  /* ribbon bookmark tracking scroll */
-  #ribbon{
-    position:fixed; top:0; right:18px; width:26px; height:100vh; z-index:60; pointer-events:none;
-  }
-  #ribbon-fill{
-    position:absolute; top:0; left:0; width:100%; background:linear-gradient(180deg,var(--wax),var(--wax-dark));
-    box-shadow:1px 0 4px rgba(0,0,0,0.3); transition:height .1s linear;
-    clip-path: polygon(0 0, 100% 0, 100% 92%, 50% 100%, 0 92%);
-  }
-
-  nav{ position:fixed; top:14px; left:0; right:60px; z-index:55; display:flex; justify-content:center; gap:26px;
-    font-family:'Special Elite', monospace; font-size:11px; letter-spacing:1px; }
-  nav a{ color:var(--ink-soft); text-decoration:none; opacity:.65; transition:.3s; border-bottom:1px dotted transparent; cursor:pointer; }
-  nav a.active{ opacity:1; color:var(--wax); border-color:var(--wax); }
-
-  /* ===== HERO: WAX SEAL OPENING ===== */
-  .hero{ min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
-    position:relative; z-index:2; padding:80px 20px 40px; text-align:center; }
-
-  .seal{ width:110px; height:110px; border-radius:50%; position:relative; margin-bottom:26px;
-    background:radial-gradient(circle at 35% 30%, #9c2c3a, var(--wax) 60%, var(--wax-dark) 100%);
-    box-shadow:0 6px 18px rgba(0,0,0,0.35), inset 0 0 20px rgba(0,0,0,0.3);
-    display:flex; align-items:center; justify-content:center;
-    animation:sealPulse 3s ease-in-out infinite;
-  }
-  .seal::before{ content:'♥'; font-size:44px; color:#e8c9a8; text-shadow:0 1px 2px rgba(0,0,0,0.4); }
-  @keyframes sealPulse{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.04); } }
-
-  .eyebrow{ font-family:'Special Elite', monospace; font-size:11px; letter-spacing:3px; text-transform:uppercase;
-    color:var(--gold-leaf); margin-bottom:10px; }
-  h1.names{ font-family:'Dancing Script', cursive; font-weight:700; font-size:clamp(46px,11vw,80px); color:var(--wax); line-height:1; }
-  .since{ font-style:italic; opacity:.75; margin-top:10px; font-size:16px; }
-
-  .timer-letter{ margin-top:40px; max-width:480px; width:100%; background:rgba(255,255,255,0.35);
-    border:1px solid var(--paper-shadow); border-radius:4px; padding:28px 20px;
-    box-shadow:0 8px 24px rgba(59,42,26,0.15); position:relative; }
-  .timer-letter::before{ content:''; position:absolute; top:-10px; left:50%; transform:translateX(-50%) rotate(-3deg);
-    width:70px; height:22px; background:var(--tape); opacity:.8; box-shadow:0 2px 4px rgba(0,0,0,0.15); }
-  .timer-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
-  @media (max-width:420px){ .timer-grid{grid-template-columns:repeat(2,1fr); row-gap:20px;} }
-  .t-unit .num{ font-family:'Dancing Script',cursive; font-weight:700; font-size:clamp(28px,6vw,40px); color:var(--wax); }
-  .t-unit .lab{ font-family:'Special Elite',monospace; font-size:9px; letter-spacing:1.5px; text-transform:uppercase; opacity:.65; margin-top:2px; }
-  .milestone{ margin-top:20px; font-style:italic; font-size:16px; color:var(--ink-soft); }
-
-  .scroll-hint{ margin-top:44px; font-family:'Special Elite',monospace; font-size:10px; letter-spacing:2px; opacity:.5; }
-
-  /* ===== PAGE STYLING (Chapters) ===== */
-  .page{ position:relative; z-index:2; max-width:640px; margin:0 auto; padding:90px 24px 90px; }
-  .page-sheet{ background:rgba(255,255,255,0.4); border:1px solid var(--paper-shadow); border-radius:3px;
-    padding:36px 26px; box-shadow:0 10px 30px rgba(59,42,26,0.18);
-    position:relative;
-  }
-  .page-sheet::after{ content:''; position:absolute; left:0; top:0; bottom:0; width:6px;
-    background:repeating-linear-gradient(180deg, var(--gold-leaf) 0 8px, transparent 8px 16px); opacity:.5; }
-
-  .chapter-label{ font-family:'Special Elite',monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase;
-    color:var(--gold-leaf); text-align:center; margin-bottom:6px; }
-  .chapter-title{ font-family:'Dancing Script',cursive; font-weight:700; font-size:clamp(30px,6vw,42px);
-    color:var(--wax); text-align:center; margin-bottom:6px; }
-  .chapter-sub{ text-align:center; font-style:italic; opacity:.7; margin-bottom:30px; }
-
-  /* Gallery */
-  .lock-box{ max-width:340px; margin:0 auto; text-align:center; padding:20px 0; }
-  .lock-box p{ font-family:'Special Elite',monospace; font-size:11px; letter-spacing:1px; opacity:.7; margin-bottom:16px; }
-  .lock-box input{ background:rgba(255,255,255,0.6); border:1px solid var(--paper-shadow); color:var(--ink);
-    padding:11px 16px; border-radius:2px; text-align:center; letter-spacing:8px; font-size:17px; width:140px; outline:none; }
-  .lock-box button{ margin-left:8px; background:var(--wax); border:none; color:#f4ecd8; font-family:'Special Elite',monospace;
-    font-size:11px; letter-spacing:1px; padding:12px 18px; border-radius:2px; cursor:pointer; }
-
-  .carousel{ display:none; }
-  .carousel.active{ display:block; }
-  .polaroid{ background:#fdfaf2; padding:14px 14px 46px; box-shadow:0 6px 16px rgba(0,0,0,0.2);
-    max-width:340px; margin:10px auto 0; position:relative; transform:rotate(-1.5deg); transition:transform .2s; }
-  .polaroid:nth-of-type(even){ transform:rotate(1.5deg); }
-  .polaroid img{ width:100%; display:block; filter:sepia(0.15) contrast(1.03); }
-  .polaroid-caption{ font-family:'Dancing Script',cursive; font-size:19px; text-align:center; margin-top:12px; color:var(--ink-soft); }
-  .polaroid::before{ content:''; position:absolute; top:-8px; left:50%; transform:translateX(-50%) rotate(2deg);
-    width:60px; height:18px; background:var(--tape); opacity:.85; }
-  .carousel-nav{ display:flex; justify-content:center; gap:16px; margin-top:18px; }
-  .carousel-nav button{ background:transparent; border:1px solid var(--paper-shadow); color:var(--wax);
-    width:36px; height:36px; border-radius:50%; cursor:pointer; font-size:15px; font-family:serif; }
-
-  /* Anniversary / quotes */
-  .anniv-box{ text-align:center; padding:16px 0 26px; border-bottom:1px dashed var(--paper-shadow); margin-bottom:26px; }
-  .anniv-label{ font-family:'Special Elite',monospace; font-size:10px; letter-spacing:2px; text-transform:uppercase; opacity:.65; }
-  .anniv-big{ font-family:'Dancing Script',cursive; font-weight:700; font-size:clamp(30px,7vw,44px); color:var(--wax); }
-  .anniv-small{ font-style:italic; opacity:.7; font-size:14px; margin-top:4px; }
-
-  .quote-line{ font-family:'Dancing Script',cursive; font-size:22px; text-align:center; color:var(--ink); margin:22px 0 4px; line-height:1.4; }
-  .quote-author{ text-align:center; font-family:'Special Elite',monospace; font-size:10px; letter-spacing:1.5px;
-    text-transform:uppercase; opacity:.6; margin-bottom:22px; }
-
-  .signature{ margin-top:34px; text-align:right; font-family:'Dancing Script',cursive; font-size:26px; color:var(--wax); }
-  .signature small{ display:block; font-family:'EB Garamond',serif; font-size:14px; font-style:italic; opacity:.7; margin-top:4px; }
-
-  /* ===== THREE SCROLL-BLOOMING FLOWERS ===== */
-  .flower-stage{
-    position:absolute;
-    z-index:1;
-    pointer-events:none;
-    width:190px;
-    height:245px;
-    opacity:.92;
-  }
-  .hero .flower-stage{ right:4%; bottom:7%; transform:rotate(9deg); }
-  .memories-flower{ left:2%; top:18%; transform:rotate(-12deg) scale(.88); }
-  .forever-flower{ right:2%; top:16%; transform:rotate(10deg) scale(.9); }
-  .flower-stem{
-    position:absolute;
-    left:94px;
-    top:74px;
-    width:5px;
-    height:160px;
-    border-radius:99px;
-    background:linear-gradient(90deg,#4f643f,#83915d 55%,#3e5232);
-    transform-origin:top;
-    transform:scaleY(.12);
-    transition:transform 1.1s cubic-bezier(.2,.8,.2,1);
-  }
-  .flower-leaf{
-    position:absolute;
-    width:42px;
-    height:20px;
-    border-radius:100% 0 100% 0;
-    background:linear-gradient(135deg,#8d9b67,#4f643f);
-    opacity:0;
-    transition:opacity .8s .45s, transform .8s .45s;
-  }
-  .flower-leaf.left{ left:54px; top:155px; transform:rotate(-30deg) scale(0); }
-  .flower-leaf.right{ left:94px; top:180px; transform:rotate(145deg) scale(0); }
-  .flower-head{
-    position:absolute;
-    left:42px;
-    top:8px;
-    width:105px;
-    height:105px;
-    z-index:3;
-    transform:scale(.08) rotate(-28deg);
-    transform-origin:center bottom;
-    transition:transform 1.25s cubic-bezier(.16,1,.3,1);
-  }
-  .flower-petal{
-    position:absolute;
-    left:37px;
-    top:4px;
-    width:31px;
-    height:62px;
-    border-radius:55% 55% 48% 48%;
-    transform-origin:50% 50px;
-    transform:rotate(calc(var(--i) * 45deg)) translateY(0);
-    box-shadow:inset 0 2px 5px rgba(255,255,255,.45), 0 2px 5px rgba(59,42,26,.15);
-  }
-  .flower-center{
-    position:absolute;
-    left:38px;
-    top:39px;
-    width:30px;
-    height:30px;
-    border-radius:50%;
-    background:radial-gradient(circle at 35% 30%,#f7d57d 0 15%,#c58b37 17% 48%,#8f5b27 52%);
-    box-shadow:0 2px 5px rgba(59,42,26,.25);
-  }
-  .bloomed .flower-stem{ transform:scaleY(1); }
-  .bloomed .flower-head{ transform:scale(1) rotate(0); }
-  .bloomed .flower-leaf.left{ opacity:1; transform:rotate(-30deg) scale(1); }
-  .bloomed .flower-leaf.right{ opacity:1; transform:rotate(145deg) scale(1); }
-  /* Each page has its own flower personality. */
-  .rose-flower .flower-petal{
-    background:linear-gradient(135deg,#d9828a,#8d2738 78%);
-    border-radius:60% 42% 56% 44%;
-  }
-  .daisy-flower .flower-petal{
-    background:linear-gradient(135deg,#fff8de,#e9d8a7);
-    width:24px;
-    height:58px;
-    left:40px;
-    top:6px;
-  }
-  .daisy-flower .flower-head{ transform:scale(.08) rotate(25deg); }
-  .daisy-flower .flower-center{ background:radial-gradient(circle at 35% 30%,#ffe69b 0 15%,#d99b36 20% 55%,#9a6129 58%); }
-  .cosmos-flower .flower-petal{
-    background:linear-gradient(135deg,#d8a0aa,#a3566e 82%);
-    width:27px;
-    height:66px;
-    border-radius:70% 30% 70% 30%;
-  }
-  .cosmos-flower .flower-head{ transform:scale(.08) rotate(-15deg); }
-  .tulip-flower{ left:3%; bottom:10%; transform:rotate(-8deg) scale(.82); }
-  .lavender-flower{ right:1%; top:22%; transform:rotate(14deg) scale(.72); }
-  .tulip-flower .flower-petal{
-    background:linear-gradient(135deg,#e7a06c,#a9503e 85%);
-    width:39px;
-    height:58px;
-    border-radius:65% 65% 32% 32%;
-  }
-  .tulip-flower .flower-petal:nth-child(1),
-  .tulip-flower .flower-petal:nth-child(3),
-  .tulip-flower .flower-petal:nth-child(5),
-  .tulip-flower .flower-petal:nth-child(7){ transform:rotate(calc(var(--i) * 45deg)) translateY(10px); }
-  .tulip-flower .flower-head{ transform:scale(.08) rotate(18deg); }
-  .lavender-flower .flower-head{ width:90px; height:110px; left:50px; top:-2px; }
-  .lavender-flower .flower-petal{
-    width:23px;
-    height:34px;
-    left:34px;
-    top:17px;
-    border-radius:70% 30% 65% 35%;
-    background:linear-gradient(135deg,#b49ac3,#715181 85%);
-    transform-origin:50% 28px;
-  }
-  .lavender-flower .flower-center{
-    left:34px;
-    top:39px;
-    width:22px;
-    height:22px;
-    background:radial-gradient(circle at 35% 30%,#f4d1a0 0 15%,#b77b4b 25% 60%,#79502e 65%);
-  }
-  .lavender-flower .flower-stem{ left:92px; top:68px; height:166px; transform:scaleY(.12) rotate(-8deg); }
-  .lavender-flower.bloomed .flower-stem{ transform:scaleY(1) rotate(-8deg); }
-  .sunflower-flower{ right:8%; bottom:4%; transform:rotate(8deg) scale(.68); }
-  .forget-flower{ left:10%; top:8%; transform:rotate(-18deg) scale(.58); }
-  .marigold-flower{ left:7%; bottom:5%; transform:rotate(-10deg) scale(.7); }
-  .camellia-flower{ left:8%; top:6%; transform:rotate(-12deg) scale(.62); }
-  .sunflower-flower .flower-petal{
-    background:linear-gradient(135deg,#ffe19a,#c9852d 85%);
-    width:25px; height:66px; border-radius:70% 30% 70% 30%;
-  }
-  .sunflower-flower .flower-center{ background:radial-gradient(circle at 35% 30%,#9a6129 0 25%,#4f2e1d 30% 70%,#2e1d17 74%); }
-  .forget-flower .flower-petal{
-    background:linear-gradient(135deg,#a7c4d2,#557f9d 85%);
-    width:22px; height:42px; border-radius:70% 30% 60% 40%;
-  }
-  .forget-flower .flower-center{ width:24px; height:24px; left:41px; top:42px; background:#f4d89a; }
-  .marigold-flower .flower-petal{
-    background:linear-gradient(135deg,#f3bc64,#b84b2d 85%);
-    width:28px; height:55px; border-radius:70% 30% 70% 30%;
-  }
-  .marigold-flower .flower-center{ background:radial-gradient(circle,#ffd98e 0 20%,#a8502b 24% 68%,#6d2d23 72%); }
-  .bluebell-flower .flower-petal{
-    background:linear-gradient(135deg,#c0afd4,#66518f 88%);
-    width:27px; height:39px; border-radius:50% 50% 65% 65%;
-  }
-  .bluebell-flower .flower-center{ background:#e8cf9b; width:18px; height:18px; left:44px; top:44px; }
-  .camellia-flower .flower-petal{
-    background:linear-gradient(135deg,#f4c2ae,#b95868 85%);
-    width:35px; height:52px; border-radius:65% 35% 62% 38%;
-  }
-  .camellia-flower .flower-center{ background:radial-gradient(circle,#fff0bd 0 14%,#c88747 20% 62%,#82432e 66%); }
-  /* Keep a small closed bud visible on every stalk before it blooms. */
-  .flower-stage:not(.bloomed) .flower-head{
-    transform:scale(.48) rotate(-14deg);
-    opacity:1;
-  }
-  @media (max-width:620px){
-    .flower-stage{ width:135px; height:190px; transform:scale(.72) !important; }
-    .hero .flower-stage{ right:-10px; bottom:4%; }
-    .memories-flower{ left:-22px; top:20%; }
-    .forever-flower{ right:-22px; top:18%; }
-    .tulip-flower{ left:-28px; bottom:8%; }
-    .lavender-flower{ right:-30px; top:25%; }
-    .sunflower-flower{ right:-24px; bottom:3%; }
-    .forget-flower{ left:-30px; top:8%; }
-    .marigold-flower{ left:-25px; bottom:3%; }
-    .camellia-flower{ left:-28px; top:6%; }
-  }
-  @media (prefers-reduced-motion:reduce){
-    .flower-stem,.flower-head,.flower-leaf{ transition:none; }
-  }
+/* ===== FLOWERS ===== */
+.flower-stage{
+position:absolute;
+z-index:1;
+pointer-events:none;
+width:190px;
+height:245px;
+opacity:.92;
+}
+/* FIX: each flower now has its OWN explicit position instead of a shared
+   ".hero .flower-stage" rule that was overriding all four hero flowers
+   onto the exact same spot (that's why some looked "empty"). */
+.rose-flower{ right:4%; bottom:7%; transform:rotate(9deg); }
+.memories-flower{ left:2%; top:18%; transform:rotate(-12deg) scale(.88); }
+.forever-flower{ right:2%; top:16%; transform:rotate(10deg) scale(.9); }
+.flower-stem{
+position:absolute;
+left:94px;
+top:74px;
+width:5px;
+height:160px;
+border-radius:99px;
+background:linear-gradient(90deg,#4f643f,#83915d 55%,#3e5232);
+transform-origin:top;
+transform:scaleY(.12);
+transition:transform 1.1s cubic-bezier(.2,.8,.2,1);
+}
+.flower-leaf{
+position:absolute;
+width:42px;
+height:20px;
+border-radius:100% 0 100% 0;
+background:linear-gradient(135deg,#8d9b67,#4f643f);
+opacity:0;
+transition:opacity .8s .45s, transform .8s .45s;
+}
+.flower-leaf.left{ left:54px; top:155px; transform:rotate(-30deg) scale(0); }
+.flower-leaf.right{ left:94px; top:180px; transform:rotate(145deg) scale(0); }
+.flower-head{
+position:absolute;
+left:42px;
+top:8px;
+width:105px;
+height:105px;
+z-index:3;
+transform:scale(.08) rotate(-28deg);
+transform-origin:center bottom;
+transition:transform 1.25s cubic-bezier(.16,1,.3,1);
+}
+.flower-petal{
+position:absolute;
+left:37px;
+top:4px;
+width:31px;
+height:62px;
+border-radius:55% 55% 48% 48%;
+transform-origin:50% 50px;
+transform:rotate(calc(var(--i) * 45deg)) translateY(0);
+box-shadow:inset 0 2px 5px rgba(255,255,255,.45), 0 2px 5px rgba(59,42,26,.15);
+}
+.flower-center{
+position:absolute;
+left:38px;
+top:39px;
+width:30px;
+height:30px;
+border-radius:50%;
+background:radial-gradient(circle at 35% 30%,#f7d57d 0 15%,#c58b37 17% 48%,#8f5b27 52%);
+box-shadow:0 2px 5px rgba(59,42,26,.25);
+}
+.bloomed .flower-stem{ transform:scaleY(1); }
+.bloomed .flower-head{ transform:scale(1) rotate(0); }
+.bloomed .flower-leaf.left{ opacity:1; transform:rotate(-30deg) scale(1); }
+.bloomed .flower-leaf.right{ opacity:1; transform:rotate(145deg) scale(1); }
+.rose-flower .flower-petal{
+background:linear-gradient(135deg,#d9828a,#8d2738 78%);
+border-radius:60% 42% 56% 44%;
+}
+.daisy-flower .flower-petal{
+background:linear-gradient(135deg,#fff8de,#e9d8a7);
+width:24px;
+height:58px;
+left:40px;
+top:6px;
+}
+.daisy-flower .flower-head{ transform:scale(.08) rotate(25deg); }
+.daisy-flower .flower-center{ background:radial-gradient(circle at 35% 30%,#ffe69b 0 15%,#d99b36 20% 55%,#9a6129 58%); }
+.cosmos-flower .flower-petal{
+background:linear-gradient(135deg,#d8a0aa,#a3566e 82%);
+width:27px;
+height:66px;
+border-radius:70% 30% 70% 30%;
+}
+.cosmos-flower .flower-head{ transform:scale(.08) rotate(-15deg); }
+.tulip-flower{ left:3%; bottom:10%; transform:rotate(-8deg) scale(.82); }
+.lavender-flower{ right:1%; top:22%; transform:rotate(14deg) scale(.72); }
+.tulip-flower .flower-petal{
+background:linear-gradient(135deg,#e7a06c,#a9503e 85%);
+width:39px;
+height:58px;
+border-radius:65% 65% 32% 32%;
+}
+.tulip-flower .flower-petal:nth-child(1),
+.tulip-flower .flower-petal:nth-child(3),
+.tulip-flower .flower-petal:nth-child(5),
+.tulip-flower .flower-petal:nth-child(7){ transform:rotate(calc(var(--i) * 45deg)) translateY(10px); }
+.tulip-flower .flower-head{ transform:scale(.08) rotate(18deg); }
+.lavender-flower .flower-head{ width:90px; height:110px; left:50px; top:-2px; }
+.lavender-flower .flower-petal{
+width:23px;
+height:34px;
+left:34px;
+top:17px;
+border-radius:70% 30% 65% 35%;
+background:linear-gradient(135deg,#b49ac3,#715181 85%);
+transform-origin:50% 28px;
+}
+.lavender-flower .flower-center{
+left:34px;
+top:39px;
+width:22px;
+height:22px;
+background:radial-gradient(circle at 35% 30%,#f4d1a0 0 15%,#b77b4b 25% 60%,#79502e 65%);
+}
+.lavender-flower .flower-stem{ left:92px; top:68px; height:166px; transform:scaleY(.12) rotate(-8deg); }
+.lavender-flower.bloomed .flower-stem{ transform:scaleY(1) rotate(-8deg); }
+.sunflower-flower{ right:8%; bottom:4%; transform:rotate(8deg) scale(.68); }
+.forget-flower{ left:10%; top:8%; transform:rotate(-18deg) scale(.58); }
+.marigold-flower{ left:7%; bottom:5%; transform:rotate(-10deg) scale(.7); }
+.camellia-flower{ left:8%; top:6%; transform:rotate(-12deg) scale(.62); }
+.sunflower-flower .flower-petal{
+background:linear-gradient(135deg,#ffe19a,#c9852d 85%);
+width:25px; height:66px; border-radius:70% 30% 70% 30%;
+}
+.sunflower-flower .flower-center{ background:radial-gradient(circle at 35% 30%,#9a6129 0 25%,#4f2e1d 30% 70%,#2e1d17 74%); }
+.forget-flower .flower-petal{
+background:linear-gradient(135deg,#a7c4d2,#557f9d 85%);
+width:22px; height:42px; border-radius:70% 30% 60% 40%;
+}
+.forget-flower .flower-center{ width:24px; height:24px; left:41px; top:42px; background:#f4d89a; }
+.marigold-flower .flower-petal{
+background:linear-gradient(135deg,#f3bc64,#b84b2d 85%);
+width:28px; height:55px; border-radius:70% 30% 70% 30%;
+}
+.marigold-flower .flower-center{ background:radial-gradient(circle,#ffd98e 0 20%,#a8502b 24% 68%,#6d2d23 72%); }
+.bluebell-flower .flower-petal{
+background:linear-gradient(135deg,#c0afd4,#66518f 88%);
+width:27px; height:39px; border-radius:50% 50% 65% 65%;
+}
+.bluebell-flower .flower-center{ background:#e8cf9b; width:18px; height:18px; left:44px; top:44px; }
+.camellia-flower .flower-petal{
+background:linear-gradient(135deg,#f4c2ae,#b95868 85%);
+width:35px; height:52px; border-radius:65% 35% 62% 38%;
+}
+.camellia-flower .flower-center{ background:radial-gradient(circle,#fff0bd 0 14%,#c88747 20% 62%,#82432e 66%); }
+.flower-stage:not(.bloomed) .flower-head{
+transform:scale(.48) rotate(-14deg);
+opacity:1;
+}
+@media (max-width:620px){
+.flower-stage{ width:135px; height:190px; transform:scale(.72) !important; }
+.rose-flower{ right:-10px; bottom:4%; }
+.memories-flower{ left:-22px; top:20%; }
+.forever-flower{ right:-22px; top:18%; }
+.tulip-flower{ left:-28px; bottom:8%; }
+.lavender-flower{ right:-30px; top:25%; }
+.sunflower-flower{ right:-24px; bottom:3%; }
+.forget-flower{ left:-30px; top:8%; }
+.marigold-flower{ left:-25px; bottom:3%; }
+.camellia-flower{ left:-28px; top:6%; }
+}
+@media (prefers-reduced-motion:reduce){
+.flower-stem,.flower-head,.flower-leaf{ transition:none; }
+}
 </style>
 </head>
-<body>
+<body class="no-scroll">
 
 <canvas id="petalCanvas" style="position:fixed;inset:0;z-index:1;pointer-events:none;"></canvas>
+
+<!-- TAP TO ENTER -->
+<div id="tapOverlay">
+  <div class="tap-sub">Yamin &amp; Kajol</div>
+  <div class="tap-seal"></div>
+  <div class="tap-text">tap to open the letter</div>
+</div>
 
 <div id="ribbon"><div id="ribbon-fill"></div></div>
 
 <nav>
-  <a data-target="hero" class="active">I</a>
-  <a data-target="memories">II</a>
-  <a data-target="forever">III</a>
+<a data-target="hero" class="active">I</a>
+<a data-target="memories">II</a>
+<a data-target="forever">III</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero" id="hero">
-  <div class="flower-stage rose-flower" aria-hidden="true">
-    <div class="flower-stem"></div><div class="flower-leaf left"></div><div class="flower-leaf right"></div>
-    <div class="flower-head">
-      <span class="flower-petal" style="--i:0"></span><span class="flower-petal" style="--i:1"></span>
-      <span class="flower-petal" style="--i:2"></span><span class="flower-petal" style="--i:3"></span>
-      <span class="flower-petal" style="--i:4"></span><span class="flower-petal" style="--i:5"></span>
-      <span class="flower-petal" style="--i:6"></span><span class="flower-petal" style="--i:7"></span>
-      <span class="flower-center"></span>
-    </div>
-  </div>
-  <div class="flower-stage tulip-flower" aria-hidden="true">
-    <div class="flower-stem"></div><div class="flower-leaf left"></div><div class="flower-leaf right"></div>
-    <div class="flower-head">
-      <span class="flower-petal" style="--i:0"></span><span class="flower-petal" style="--i:1"></span>
-      <span class="flower-petal" style="--i:2"></span><span class="flower-petal" style="--i:3"></span>
-      <span class="flower-petal" style="--i:4"></span><span class="flower-petal" style="--i:5"></span>
-      <span class="flower-petal" style="--i:6"></span><span class="flower-petal" style="--i:7"></span>
-      <span class="flower-center"></span>
-    </div>
-  </div>
-  <div class="flower-stage sunflower-flower" aria-hidden="true">
-    <div class="flower-stem"></div><div class="flower-leaf left"></div><div class="flower-leaf right"></div>
-    <div class="flower-head">
-      <span class="flower-petal" style="--i:0"></span><span class="flower-petal" style="--i:1"></span><span class="flower-petal" style="--i:2"></span><span class="flower-petal" style="--i:3"></span>
-      <span class="flower-petal" style="--i:4"></span><span class="flower-petal" style="--i:5"></span><span class="flower-petal" style="--i:6"></span><span class="flower-petal" style="--i:7"></span><span class="flower-center"></span>
-    </div>
-  </div>
-  <div class="flower-stage forget-flower" aria-hidden="true">
-    <div class="flower-stem"></div><div class="flower-leaf left"></div><div class="flower-leaf right"></div>
-    <div class="flower-head">
-      <span class="flower-petal" style="--i:0"></span><span class="flower-petal" style="--i:1"></span><span class="flower-petal" style="--i:2"></span><span class="flower-petal" style="--i:3"></span>
-      <span class="flower-petal" style="--i:4"></span><span class="flower-petal" style="--i:5"></span><span class="flower-petal" style="--i:6"></span><span class="flower-petal" style="--i:7"></span><span class="flower-center"></span>
-    </div>
-  </div>
-  <div class="seal"></div>
-  <div class="eyebrow">A Letter Since 08 August 2025</div>
-  <h1 class="names">Yamin &amp; Kajol</h1>
-  <div class="since">every second, still choosing you</div>
-
-  <div class="timer-letter">
-    <div class="timer-grid">
-      <div class="t-unit"><div class="num" id="years">0</div><div class="lab">Years</div></div>
-      <div class="t-unit"><div class="num" id="months">0</div><div class="lab">Months</div></div>
-      <div class="t-unit"><div class="num" id="days">0</div><div class="lab">Days</div></div>
-      <div class="t-unit"><div class="num" id="hours">0</div><div class="lab">Hours</div></div>
-      <div class="t-unit"><div class="num" id="mins">0</div><div class="lab">Mins</div></div>
-      <div class="t-unit"><div class="num" id="secs">0</div><div class="lab">Secs</div></div>
-    </div>
-    <div class="milestone" id="milestoneText"></div>
-  </div>
-
-  <div class="scroll-hint">— turn the page —</div>
+<div class="flower-stage rose-flower" aria-hidden="true">
+<div class="flower-stem"></div><div class="flower-leaf left"></div><div class="flower-leaf right"></div>
+<div class="flower-head">
+<span class="flower-petal" style="--i:0"></span><span class="flower-petal" style="--i:1"></span>
+<span class="flower-petal" style="--i:2"></span><span class="flower-petal" style="--i:3"></span>
+<span class="flower-petal" style="--i:4"></span><span class="flower-petal" style="--i:5"></span>
+<span class="flower-petal" style="--i:6"></span><span class="flower-petal" style="--i:7"></span>
+<span class="flower-center"></span>
+</div>
+</div>
+<div class="flower-stage tulip-flower" aria-hidden="true">
+<div class="flower-stem"></div><div class="flower-leaf left"></div><div class="flower-leaf right"></div>
+<div class="flower-head">
+<span class="flower-petal" style="--i:0"></span><span class="flower-petal" style="--i:1"></span>
+<span class="flower-petal" style="--i:2"></span><span class="flower-petal" style="--i:3"></span>
+<span class="flower-petal" style="--i:4"></span><span class="flower-petal" style="--i:5"></span>
+<span class="flower-petal" style="--i:6"></span><span class="flower-petal" style="--i:7"></span>
+<span class="flower-center"></span>
+</div>
+</div>
+<div class="flower-stage sunflower-flower" aria-hidden="true">
+<div class="flower-stem"></div><div class="flower-leaf left"></div><div class="flower-leaf right"></div>
+<div class="flower-head">
+<span class="flower-petal" style="--i:0"></span><span class="flower-petal" style="--i:1"></span><span class="flower-petal" style="--i:2"></span><span class="flower-petal" style="--i:3"></span>
+<span class="flower-petal" style="--i:4"></span><span class="flower-petal" style="--i:5"></span><span class="flower-petal" style="--i:6"></span><span class="flower-petal" style="--i:7"></span><span class="flower-center"></span>
+</div>
+</div>
+<div class="flower-stage forget-flower" aria-hidden="true">
+<div class="flower-stem"></div><div class="flower-leaf left"></div><div class="flower-leaf right"></div>
+<div class="flower-head">
+<span class="flower-petal" style="--i:0"></span><span class="flower-petal" style="--i:1"></span><span class="flower-petal" style="--i:2"></span><span class="flower-petal" style="--i:3"></span>
+<span class="flower-petal" style="--i:4"></span><span class="flower-petal" style="--i:5"></span><span class="flower-petal" style="--i:6"></span><span class="flower-petal" style="--i:7"></span><span class="flower-center"></span>
+</div>
+</div>
+<div class="seal"></div>
+<div class="eyebrow">A Letter Since 08 August 2025</div>
+<h1 class="names">Yamin &amp; Kajol</h1>
+<div class="since">every second, still choosing you</div>
+<div class="timer-letter">
+<div class="timer-grid">
+<div class="t-unit"><div class="num" id="years">0</div><div class="lab">Years</div></div>
+<div class="t-unit"><div class="num" id="months">0</div><div class="lab">Months</div></div>
+<div class="t-unit"><div class="num" id="days">0</div><div class="lab">Days</div></div>
+<div class="t-unit"><div class="num" id="hours">0</div><div class="lab">Hours</div></div>
+<div class="t-unit"><div class="num" id="mins">0</div><div class="lab">Mins</div></div>
+<div class="t-unit"><div class="num" id="secs">0</div><div class="lab">Secs</div></div>
+</div>
+<div class="milestone" id="milestoneText"></div>
+</div>
+<div class="scroll-hint">— turn the page —</div>
 </section>
 
 <!-- CHAPTER II: MEMORIES -->
 <section class="page" id="memories">
-  <div class="flower-stage daisy-flower memories-flower" aria-hidden="true">
-    <div class="flower-stem"></div><div class="flower-leaf left"></div><div class="flower-leaf right"></div>
-    <div class="flower-head">
-      <span class="flower-petal" style="--i:0"></span><span class="flower-petal" style="--i:1"></span>
-      <span class="flower-petal" style="--i:2"></span><span class="flower-petal" style="--i:3"></span>
-      <span class="flower-petal" style="--i:4"></span><span class="flower-petal" style="--i:5"></span>
-      <span class="flower-petal" style="--i:6"></span><span class="flower-petal" style="--i:7"></span>
-      <span class="flower-center"></span>
-    </div>
-  </div>
-  <div class="flower-stage lavender-flower" aria-hidden="true">
-    <div class="flower-stem"></div><div class="flower-leaf left"></div><div class="flower-leaf right"></div>
-    <div class="flower-head">
-      <span class="flower-petal" style="--i:0"></span><span class="flower-petal" style="--i:1"></span>
-      <span class="flower-petal" style="--i:2"></span><span class="flower-petal" style="--i:3"></span>
-      <span class="flower-petal" style="--i:4"></span><span class="flower-petal" style="--i:5"></span>
-      <span class="flower-petal" style="--i:6"></span><span class="flower-petal" style="--i:7"></span>
-      <span class="flower-center"></span>
-    </div>
-  </div>
-  <div class="flower-stage marigold-flower" aria-hidden="true">
-    <div class="flower-stem"></div><div class="flower-leaf left"></div><div class="flower-leaf right"></div>
-    <div class="flower-head">
-      <span class="flower-petal" style="--i:0"></span><span class="flower-petal" style="--i:1"></span><span class="flower-petal" style="--i:2"></span><span class="flower-petal" style="--i:3"></span>
-      <span class="flower-petal" style="--i:4"></span><span class="flower-petal" style="--i:5"></span><span class="flower-petal" style="--i:6"></span><span class="flower-petal" style="--i:7"></span><span class="flower-center"></span>
-    </div>
-  </div>
-  <div class="page-sheet">
-    <div class="chapter-label">Chapter II</div>
-    <div class="chapter-title">Memories Kept</div>
-    <div class="chapter-sub">pressed between these pages, like flowers</div>
-
-    <div class="lock-box" id="lockBox">
-      <p>ENTER THE PASSWORD TO OPEN</p>
-      <input type="password" id="pwInput" placeholder="••••" maxlength="4" inputmode="numeric">
-      <button onclick="unlockGallery()">Open</button>
-    </div>
-
-    <div class="carousel" id="carousel">
-      <div class="polaroid">
-        <img id="slideImg" src="" alt="memory">
-        <div class="polaroid-caption" id="slideCaption"></div>
-      </div>
-      <div class="carousel-nav">
-        <button onclick="changeSlide(-1)">‹</button>
-        <button onclick="changeSlide(1)">›</button>
-      </div>
-    </div>
-  </div>
+<div class="flower-stage daisy-flower memories-flower" aria-hidden="true">
+<div class="flower-stem"></div><div class="flower-leaf left"></div><div class="flower-leaf right"></div>
+<div class="flower-head">
+<span class="flower-petal" style="--i:0"></span><span class="flower-petal" style="--i:1"></span>
+<span class="flower-petal" style="--i:2"></span><span class="flower-petal" style="--i:3"></span>
+<span class="flower-petal" style="--i:4"></span><span class="flower-petal" style="--i:5"></span>
+<span class="flower-petal" style="--i:6"></span><span class="flower-petal" style="--i:7"></span>
+<span class="flower-center"></span>
+</div>
+</div>
+<div class="flower-stage lavender-flower" aria-hidden="true">
+<div class="flower-stem"></div><div class="flower-leaf left"></div><div class="flower-leaf right"></div>
+<div class="flower-head">
+<span class="flower-petal" style="--i:0"></span><span class="flower-petal" style="--i:1"></span>
+<span class="flower-petal" style="--i:2"></span><span class="flower-petal" style="--i:3"></span>
+<span class="flower-petal" style="--i:4"></span><span class="flower-petal" style="--i:5"></span>
+<span class="flower-petal" style="--i:6"></span><span class="flower-petal" style="--i:7"></span>
+<span class="flower-center"></span>
+</div>
+</div>
+<div class="flower-stage marigold-flower" aria-hidden="true">
+<div class="flower-stem"></div><div class="flower-leaf left"></div><div class="flower-leaf right"></div>
+<div class="flower-head">
+<span class="flower-petal" style="--i:0"></span><span class="flower-petal" style="--i:1"></span><span class="flower-petal" style="--i:2"></span><span class="flower-petal" style="--i:3"></span>
+<span class="flower-petal" style="--i:4"></span><span class="flower-petal" style="--i:5"></span><span class="flower-petal" style="--i:6"></span><span class="flower-petal" style="--i:7"></span><span class="flower-center"></span>
+</div>
+</div>
+<div class="page-sheet">
+<div class="chapter-label">Chapter II</div>
+<div class="chapter-title">Memories Kept</div>
+<div class="chapter-sub">pressed between these pages, like flowers</div>
+<div class="lock-box" id="lockBox">
+<p>ENTER THE PASSWORD TO OPEN</p>
+<input type="password" id="pwInput" placeholder="••••" maxlength="4" inputmode="numeric">
+<button onclick="unlockGallery()">Open</button>
+</div>
+<div class="carousel" id="carousel">
+<div class="polaroid">
+<img id="slideImg" src="" alt="memory">
+<div class="polaroid-caption" id="slideCaption"></div>
+</div>
+<div class="carousel-nav">
+<button onclick="changeSlide(-1)">‹</button>
+<button onclick="changeSlide(1)">›</button>
+</div>
+</div>
+</div>
 </section>
 
 <!-- CHAPTER III: FOREVER -->
 <section class="page" id="forever">
-  <div class="flower-stage cosmos-flower forever-flower" aria-hidden="true">
-    <div class="flower-stem"></div><div class="flower-leaf left"></div><div class="flower-leaf right"></div>
-    <div class="flower-head">
-      <span class="flower-petal" style="--i:0"></span><span class="flower-petal" style="--i:1"></span>
-      <span class="flower-petal" style="--i:2"></span><span class="flower-petal" style="--i:3"></span>
-      <span class="flower-petal" style="--i:4"></span><span class="flower-petal" style="--i:5"></span>
-      <span class="flower-petal" style="--i:6"></span><span class="flower-petal" style="--i:7"></span>
-      <span class="flower-center"></span>
-    </div>
-  </div>
-  <div class="flower-stage camellia-flower" aria-hidden="true">
-    <div class="flower-stem"></div><div class="flower-leaf left"></div><div class="flower-leaf right"></div>
-    <div class="flower-head">
-      <span class="flower-petal" style="--i:0"></span><span class="flower-petal" style="--i:1"></span><span class="flower-petal" style="--i:2"></span><span class="flower-petal" style="--i:3"></span>
-      <span class="flower-petal" style="--i:4"></span><span class="flower-petal" style="--i:5"></span><span class="flower-petal" style="--i:6"></span><span class="flower-petal" style="--i:7"></span><span class="flower-center"></span>
-    </div>
-  </div>
-  <div class="page-sheet">
-    <div class="chapter-label">Chapter III</div>
-    <div class="chapter-title">Ever After</div>
-    <div class="chapter-sub">words others gave to love, and one I wrote myself</div>
-
-    <div class="anniv-box">
-      <div class="anniv-label">Next Anniversary In</div>
-      <div class="anniv-big" id="annivCountdown">—</div>
-      <div class="anniv-small" id="annivDate"></div>
-    </div>
-
-    <div class="quote-line">"Whatever our souls are made of, his and mine are the same."</div>
-    <div class="quote-author">— Emily Brontë</div>
-
-    <div class="quote-line">"The best thing to hold onto in life is each other."</div>
-    <div class="quote-author">— Audrey Hepburn</div>
-
-    <div class="quote-line">"Love is composed of a single soul inhabiting two bodies."</div>
-    <div class="quote-author">— Aristotle</div>
-
-    <div class="signature">
-      Every year with you rewrites what I thought forever meant.
-      <small>— Yamin, to Kajol</small>
-    </div>
-  </div>
+<div class="flower-stage cosmos-flower forever-flower" aria-hidden="true">
+<div class="flower-stem"></div><div class="flower-leaf left"></div><div class="flower-leaf right"></div>
+<div class="flower-head">
+<span class="flower-petal" style="--i:0"></span><span class="flower-petal" style="--i:1"></span>
+<span class="flower-petal" style="--i:2"></span><span class="flower-petal" style="--i:3"></span>
+<span class="flower-petal" style="--i:4"></span><span class="flower-petal" style="--i:5"></span>
+<span class="flower-petal" style="--i:6"></span><span class="flower-petal" style="--i:7"></span>
+<span class="flower-center"></span>
+</div>
+</div>
+<div class="flower-stage camellia-flower" aria-hidden="true">
+<div class="flower-stem"></div><div class="flower-leaf left"></div><div class="flower-leaf right"></div>
+<div class="flower-head">
+<span class="flower-petal" style="--i:0"></span><span class="flower-petal" style="--i:1"></span><span class="flower-petal" style="--i:2"></span><span class="flower-petal" style="--i:3"></span>
+<span class="flower-petal" style="--i:4"></span><span class="flower-petal" style="--i:5"></span><span class="flower-petal" style="--i:6"></span><span class="flower-petal" style="--i:7"></span><span class="flower-center"></span>
+</div>
+</div>
+<div class="page-sheet">
+<div class="chapter-label">Chapter III</div>
+<div class="chapter-title">Ever After</div>
+<div class="chapter-sub">words others gave to love, and one I wrote myself</div>
+<div class="anniv-box">
+<div class="anniv-label">Next Anniversary In</div>
+<div class="anniv-big" id="annivCountdown">—</div>
+<div class="anniv-small" id="annivDate"></div>
+</div>
+<div class="quote-line">"Whatever our souls are made of, his and mine are the same."</div>
+<div class="quote-author">— Emily Brontë</div>
+<div class="quote-line">"The best thing to hold onto in life is each other."</div>
+<div class="quote-author">— Audrey Hepburn</div>
+<div class="quote-line">"Love is composed of a single soul inhabiting two bodies."</div>
+<div class="quote-author">— Aristotle</div>
+<div class="signature">
+Every year with you rewrites what I thought forever meant.
+<small>— Yamin, to Kajol</small>
+</div>
+</div>
 </section>
 
 <script>
+/* ===== TAP TO ENTER ===== */
+const tapOverlay = document.getElementById('tapOverlay');
+tapOverlay.addEventListener('click', ()=>{
+  tapOverlay.classList.add('hide');
+  document.body.classList.remove('no-scroll');
+});
+
 /* ===== RIBBON + NAV SCROLL TRACKING ===== */
 const ribbonFill = document.getElementById('ribbon-fill');
 const navLinks = document.querySelectorAll('nav a');
 const sectionEls = ['hero','memories','forever'].map(id=>document.getElementById(id));
-
 function updateOnScroll(){
-  const scrollY = window.scrollY;
-  const docHeight = document.body.scrollHeight - window.innerHeight;
-  const pct = docHeight>0 ? scrollY/docHeight : 0;
-  ribbonFill.style.height = (pct*100) + '%';
-
-  let activeIdx = 0;
-  sectionEls.forEach((el,i)=>{
-    if(scrollY + window.innerHeight/2 >= el.offsetTop) activeIdx = i;
-  });
-  navLinks.forEach((a,i)=> a.classList.toggle('active', i===activeIdx));
+const scrollY = window.scrollY;
+const docHeight = document.body.scrollHeight - window.innerHeight;
+const pct = docHeight>0 ? scrollY/docHeight : 0;
+ribbonFill.style.height = (pct*100) + '%';
+let activeIdx = 0;
+sectionEls.forEach((el,i)=>{
+if(scrollY + window.innerHeight/2 >= el.offsetTop) activeIdx = i;
+});
+navLinks.forEach((a,i)=> a.classList.toggle('active', i===activeIdx));
 }
 window.addEventListener('scroll', updateOnScroll);
 updateOnScroll();
 navLinks.forEach(a=>{
-  a.addEventListener('click', ()=> document.getElementById(a.dataset.target).scrollIntoView({behavior:'smooth'}));
+a.addEventListener('click', ()=> document.getElementById(a.dataset.target).scrollIntoView({behavior:'smooth'}));
 });
 
-/* ===== FLOATING PETALS (subtle, sepia-toned) ===== */
+/* ===== FLOATING PETALS ===== */
 const canvas = document.getElementById('petalCanvas');
 const ctx = canvas.getContext('2d');
- function resize(){ canvas.width=innerWidth; canvas.height=innerHeight; }
+function resize(){ canvas.width=innerWidth; canvas.height=innerHeight; }
 resize(); window.addEventListener('resize', resize);
 const symbols = ['❀','✿'];
- let particles = Array.from({length: window.innerWidth<500?22:36}, () => ({
-  x: Math.random()*canvas.width, y: Math.random()*canvas.height,
-  size: 10+Math.random()*14, speedY: 0.15+Math.random()*0.35,
-  rot: Math.random()*360, rotSpeed:(Math.random()-0.5)*0.6,
-  sym: symbols[Math.floor(Math.random()*symbols.length)], opacity: 0.1+Math.random()*0.18
+let particles = Array.from({length: window.innerWidth<500?22:36}, () => ({
+x: Math.random()*canvas.width, y: Math.random()*canvas.height,
+size: 10+Math.random()*14, speedY: 0.15+Math.random()*0.35,
+rot: Math.random()*360, rotSpeed:(Math.random()-0.5)*0.6,
+sym: symbols[Math.floor(Math.random()*symbols.length)], opacity: 0.1+Math.random()*0.18
 }));
 function animate(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  particles.forEach(p=>{
-     ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot*Math.PI/180);
-     ctx.globalAlpha = p.opacity; ctx.font = p.size+'px serif'; ctx.fillStyle = '#7a1f2b';
-     ctx.fillText(p.sym, -p.size/2, p.size/2); ctx.restore();
-    p.y += p.speedY; p.rot += p.rotSpeed;
-    if(p.y > canvas.height + 20){ p.y = -20; p.x = Math.random()*canvas.width; }
-  });
-  requestAnimationFrame(animate);
+ctx.clearRect(0,0,canvas.width,canvas.height);
+particles.forEach(p=>{
+ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot*Math.PI/180);
+ctx.globalAlpha = p.opacity; ctx.font = p.size+'px serif'; ctx.fillStyle = '#7a1f2b';
+ctx.fillText(p.sym, -p.size/2, p.size/2); ctx.restore();
+p.y += p.speedY; p.rot += p.rotSpeed;
+if(p.y > canvas.height + 20){ p.y = -20; p.x = Math.random()*canvas.width; }
+});
+requestAnimationFrame(animate);
 }
 animate();
 
 /* ===== TIMER ===== */
 const startDate = new Date('2025-08-08T00:00:00');
 function updateTimer(){
-  const now = new Date();
-  let years = now.getFullYear() - startDate.getFullYear();
-  let months = now.getMonth() - startDate.getMonth();
-  let days = now.getDate() - startDate.getDate();
-  let hours = now.getHours() - startDate.getHours();
-  let mins = now.getMinutes() - startDate.getMinutes();
-  let secs = now.getSeconds() - startDate.getSeconds();
-  if(secs<0){secs+=60; mins--;}
-  if(mins<0){mins+=60; hours--;}
-  if(hours<0){hours+=24; days--;}
-  if(days<0){ const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0).getDate(); days += prevMonth; months--; }
-  if(months<0){months+=12; years--;}
-  document.getElementById('years').textContent = years;
-  document.getElementById('months').textContent = months;
-  document.getElementById('days').textContent = days;
-  document.getElementById('hours').textContent = String(hours).padStart(2,'0');
-  document.getElementById('mins').textContent = String(mins).padStart(2,'0');
-  document.getElementById('secs').textContent = String(secs).padStart(2,'0');
-  const totalDays = Math.floor((now-startDate)/86400000);
-  let msg = "";
-  if(totalDays < 1) msg = "The story just began.";
-  else if(years === 0 && months === 0) msg = `${totalDays} days of choosing each other, one at a time.`;
-  else if(years === 0) msg = `${months} month${months>1?'s':''} and ${days} day${days!==1?'s':''} into forever.`;
-  else msg = `${years} year${years>1?'s':''}, ${months} month${months!==1?'s':''} — and still writing our story.`;
-  document.getElementById('milestoneText').textContent = msg;
+const now = new Date();
+let years = now.getFullYear() - startDate.getFullYear();
+let months = now.getMonth() - startDate.getMonth();
+let days = now.getDate() - startDate.getDate();
+let hours = now.getHours() - startDate.getHours();
+let mins = now.getMinutes() - startDate.getMinutes();
+let secs = now.getSeconds() - startDate.getSeconds();
+if(secs<0){secs+=60; mins--;}
+if(mins<0){mins+=60; hours--;}
+if(hours<0){hours+=24; days--;}
+if(days<0){ const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0).getDate(); days += prevMonth; months--; }
+if(months<0){months+=12; years--;}
+document.getElementById('years').textContent = years;
+document.getElementById('months').textContent = months;
+document.getElementById('days').textContent = days;
+document.getElementById('hours').textContent = String(hours).padStart(2,'0');
+document.getElementById('mins').textContent = String(mins).padStart(2,'0');
+document.getElementById('secs').textContent = String(secs).padStart(2,'0');
+const totalDays = Math.floor((now-startDate)/86400000);
+let msg = "";
+if(totalDays < 1) msg = "The story just began.";
+else if(years === 0 && months === 0) msg = `${totalDays} days of choosing each other, one at a time.`;
+else if(years === 0) msg = `${months} month${months>1?'s':''} and ${days} day${days!==1?'s':''} into forever.`;
+else msg = `${years} year${years>1?'s':''}, ${months} month${months!==1?'s':''} — and still writing our story.`;
+document.getElementById('milestoneText').textContent = msg;
 }
 setInterval(updateTimer, 1000); updateTimer();
 
 /* ===== GALLERY ===== */
 const memories = [
-  { src: "IMG_20260718_085710.jpg", caption: "every laugh, a memory worth keeping" },
-  { src: "IMG_20260718_090742.jpg", caption: "us, always and always" }
+{ src: "IMG_20260718_085710.jpg", caption: "every laugh, a memory worth keeping" },
+{ src: "IMG_20260718_090742.jpg", caption: "us, always and always" }
 ];
 let currentSlide = 0;
 function unlockGallery(){
-  const val = document.getElementById('pwInput').value;
-  if(val === '0413'){
-    document.getElementById('lockBox').style.display = 'none';
-    document.getElementById('carousel').classList.add('active');
-    renderSlide();
-  } else {
-    document.getElementById('pwInput').style.borderColor = '#7a1f2b';
-    setTimeout(()=>{ document.getElementById('pwInput').style.borderColor=''; }, 600);
-  }
+const val = document.getElementById('pwInput').value;
+if(val === '0413'){
+document.getElementById('lockBox').style.display = 'none';
+document.getElementById('carousel').classList.add('active');
+renderSlide();
+} else {
+document.getElementById('pwInput').style.borderColor = '#7a1f2b';
+setTimeout(()=>{ document.getElementById('pwInput').style.borderColor=''; }, 600);
+}
 }
 function renderSlide(){
-  const m = memories[currentSlide];
-  document.getElementById('slideImg').src = m.src;
-  document.getElementById('slideCaption').textContent = m.caption;
+const m = memories[currentSlide];
+document.getElementById('slideImg').src = m.src;
+document.getElementById('slideCaption').textContent = m.caption;
 }
 function changeSlide(dir){
-  currentSlide = (currentSlide + dir + memories.length) % memories.length;
-  renderSlide();
+currentSlide = (currentSlide + dir + memories.length) % memories.length;
+renderSlide();
 }
 
 /* ===== ANNIVERSARY COUNTDOWN ===== */
 function updateAnniversary(){
-  const now = new Date();
-  let nextAnniv = new Date(now.getFullYear(), startDate.getMonth(), startDate.getDate());
-  if(nextAnniv < now) nextAnniv = new Date(now.getFullYear()+1, startDate.getMonth(), startDate.getDate());
-  const diff = nextAnniv - now;
-  const days = Math.floor(diff / 86400000);
-  const hours = Math.floor((diff % 86400000) / 3600000);
-  document.getElementById('annivCountdown').textContent = `${days}d ${hours}h`;
-  const yearNum = nextAnniv.getFullYear() - startDate.getFullYear();
-  document.getElementById('annivDate').textContent =
-    `${nextAnniv.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})} · Year ${yearNum}`;
+const now = new Date();
+let nextAnniv = new Date(now.getFullYear(), startDate.getMonth(), startDate.getDate());
+if(nextAnniv < now) nextAnniv = new Date(now.getFullYear()+1, startDate.getMonth(), startDate.getDate());
+const diff = nextAnniv - now;
+const days = Math.floor(diff / 86400000);
+const hours = Math.floor((diff % 86400000) / 3600000);
+document.getElementById('annivCountdown').textContent = `${days}d ${hours}h`;
+const yearNum = nextAnniv.getFullYear() - startDate.getFullYear();
+document.getElementById('annivDate').textContent =
+`${nextAnniv.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})} · Year ${yearNum}`;
 }
 setInterval(updateAnniversary, 60000); updateAnniversary();
 
 /* ===== FLOWERS BLOOM AS EACH PAGE IS REACHED ===== */
 const scrollFlowers = [...document.querySelectorAll('.flower-stage')].map(flower=>({
-  flower,
-  section: flower.closest('section')
+flower,
+section: flower.closest('section')
 }));
 let flowerFrame = 0;
 function updateFlowerBloom(){
-  flowerFrame = 0;
-  const bloomLine = window.innerHeight * .74;
-  scrollFlowers.forEach(({flower, section})=>{
-    if(!section) return;
-    const box = section.getBoundingClientRect();
-    // Open the flower when its page reaches the lower part of the viewport.
-    // Removing the class after leaving lets it bloom again when revisited.
-    const shouldBloom = box.top < bloomLine && box.bottom > window.innerHeight * .12;
-    flower.classList.toggle('bloomed', shouldBloom);
-  });
+flowerFrame = 0;
+const bloomLine = window.innerHeight * .74;
+scrollFlowers.forEach(({flower, section})=>{
+if(!section) return;
+const box = section.getBoundingClientRect();
+const shouldBloom = box.top < bloomLine && box.bottom > window.innerHeight * .12;
+flower.classList.toggle('bloomed', shouldBloom);
+});
 }
 function requestFlowerUpdate(){
-  if(!flowerFrame) flowerFrame = requestAnimationFrame(updateFlowerBloom);
+if(!flowerFrame) flowerFrame = requestAnimationFrame(updateFlowerBloom);
 }
 window.addEventListener('scroll', requestFlowerUpdate, {passive:true});
 window.addEventListener('resize', requestFlowerUpdate);
 requestFlowerUpdate();
 
-/* recalc canvas height once page fully renders */
 window.addEventListener('load', resize);
 </script>
 </body>
