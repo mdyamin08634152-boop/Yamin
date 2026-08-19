@@ -214,7 +214,7 @@ height:58px;
 left:40px;
 top:6px;
 }
-.daisy-flower .flower-head{ transform:scale(.08) rotate(25deg); }
+.daisy-flower:not(.bloomed) .flower-head{ transform:scale(.08) rotate(25deg); }
 .daisy-flower .flower-center{ background:radial-gradient(circle at 35% 30%,#ffe69b 0 15%,#d99b36 20% 55%,#9a6129 58%); }
 .cosmos-flower .flower-petal{
 background:linear-gradient(135deg,#d8a0aa,#a3566e 82%);
@@ -222,7 +222,7 @@ width:27px;
 height:66px;
 border-radius:70% 30% 70% 30%;
 }
-.cosmos-flower .flower-head{ transform:scale(.08) rotate(-15deg); }
+.cosmos-flower:not(.bloomed) .flower-head{ transform:scale(.08) rotate(-15deg); }
 .tulip-flower{ left:-3%; bottom:12%; transform:rotate(-8deg) scale(.7); }
 .lavender-flower{ right:-2%; top:24%; transform:rotate(14deg) scale(.62); }
 .tulip-flower .flower-petal{
@@ -235,7 +235,7 @@ border-radius:65% 65% 32% 32%;
 .tulip-flower .flower-petal:nth-child(3),
 .tulip-flower .flower-petal:nth-child(5),
 .tulip-flower .flower-petal:nth-child(7){ transform:rotate(calc(var(--i) * 45deg)) translateY(10px); }
-.tulip-flower .flower-head{ transform:scale(.08) rotate(18deg); }
+.tulip-flower:not(.bloomed) .flower-head{ transform:scale(.08) rotate(18deg); }
 .lavender-flower .flower-head{ width:90px; height:110px; left:50px; top:-2px; }
 .lavender-flower .flower-petal{
 width:23px;
@@ -255,7 +255,7 @@ background:radial-gradient(circle at 35% 30%,#f4d1a0 0 15%,#b77b4b 25% 60%,#7950
 }
 .lavender-flower .flower-stem{ left:92px; top:68px; height:166px; transform:scaleY(.12) rotate(-8deg); }
 .lavender-flower.bloomed .flower-stem{ transform:scaleY(1) rotate(-8deg); }
-.sunflower-flower{ right:-4%; bottom:0%; transform:rotate(8deg) scale(.56); }
+.sunflower-flower{ right:-4%; top:6%; transform:rotate(8deg) scale(.56); }
 .forget-flower{ left:-2%; top:4%; transform:rotate(-18deg) scale(.48); }
 .marigold-flower{ left:7%; bottom:5%; transform:rotate(-10deg) scale(.7); }
 .camellia-flower{ left:8%; top:6%; transform:rotate(-12deg) scale(.62); }
@@ -289,16 +289,16 @@ transform:scale(.48) rotate(-14deg);
 opacity:1;
 }
 @media (max-width:620px){
-.flower-stage{ width:135px; height:190px; transform:scale(.72) !important; }
-.rose-flower{ right:-10px; bottom:4%; }
-.memories-flower{ left:-22px; top:20%; }
-.forever-flower{ right:-22px; top:18%; }
-.tulip-flower{ left:-28px; bottom:8%; }
-.lavender-flower{ right:-30px; top:25%; }
-.sunflower-flower{ right:-24px; bottom:3%; }
-.forget-flower{ left:-30px; top:8%; }
-.marigold-flower{ left:-25px; bottom:3%; }
-.camellia-flower{ left:-28px; top:6%; }
+.flower-stage{ width:150px; height:205px; transform:scale(.82) !important; }
+.rose-flower{ right:-14px; bottom:2%; }
+.memories-flower{ left:-24px; top:18%; }
+.forever-flower{ right:-24px; top:16%; }
+.tulip-flower{ left:-30px; bottom:8%; }
+.lavender-flower{ right:-32px; top:24%; }
+.sunflower-flower{ right:-26px; top:4%; }
+.forget-flower{ left:-32px; top:6%; }
+.marigold-flower{ left:-27px; bottom:3%; }
+.camellia-flower{ left:-30px; top:5%; }
 }
 @media (prefers-reduced-motion:reduce){
 .flower-stem,.flower-head,.flower-leaf{ transition:none; }
