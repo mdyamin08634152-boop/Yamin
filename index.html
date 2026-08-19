@@ -36,8 +36,9 @@ position:absolute; top:0; left:0; width:100%; background:linear-gradient(180deg,
 box-shadow:1px 0 4px rgba(0,0,0,0.3); transition:height .1s linear;
 clip-path: polygon(0 0, 100% 0, 100% 92%, 50% 100%, 0 92%);
 }
-nav{ position:fixed; top:14px; left:0; right:60px; z-index:55; display:flex; justify-content:center; gap:26px;
-font-family:'Special Elite', monospace; font-size:11px; letter-spacing:1px; }
+nav{ position:fixed; top:0; left:0; right:0; z-index:55; display:flex; justify-content:center; gap:26px;
+padding:16px 60px 16px 0; font-family:'Special Elite', monospace; font-size:11px; letter-spacing:1px;
+background:rgba(239,227,199,0.88); backdrop-filter:blur(8px); border-bottom:1px solid var(--paper-shadow); }
 nav a{ color:var(--ink-soft); text-decoration:none; opacity:.65; transition:.3s; border-bottom:1px dotted transparent; cursor:pointer; }
 nav a.active{ opacity:1; color:var(--wax); border-color:var(--wax); }
 
@@ -77,9 +78,9 @@ animation:sealPulse 3s ease-in-out infinite;
 color:var(--gold-leaf); margin-bottom:10px; }
 h1.names{ font-family:'Dancing Script', cursive; font-weight:700; font-size:clamp(46px,11vw,80px); color:var(--wax); line-height:1; }
 .since{ font-style:italic; opacity:.75; margin-top:10px; font-size:16px; }
-.timer-letter{ margin-top:40px; max-width:480px; width:100%; background:rgba(255,255,255,0.35);
+.timer-letter{ margin-top:40px; max-width:480px; width:100%; background:rgba(255,255,255,0.58);
 border:1px solid var(--paper-shadow); border-radius:4px; padding:28px 20px;
-box-shadow:0 8px 24px rgba(59,42,26,0.15); position:relative; }
+box-shadow:0 8px 24px rgba(59,42,26,0.2); position:relative; z-index:4; }
 .timer-letter::before{ content:''; position:absolute; top:-10px; left:50%; transform:translateX(-50%) rotate(-3deg);
 width:70px; height:22px; background:var(--tape); opacity:.8; box-shadow:0 2px 4px rgba(0,0,0,0.15); }
 .timer-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
@@ -89,9 +90,9 @@ width:70px; height:22px; background:var(--tape); opacity:.8; box-shadow:0 2px 4p
 .milestone{ margin-top:20px; font-style:italic; font-size:16px; color:var(--ink-soft); }
 .scroll-hint{ margin-top:44px; font-family:'Special Elite',monospace; font-size:10px; letter-spacing:2px; opacity:.5; }
 .page{ position:relative; z-index:2; max-width:640px; margin:0 auto; padding:90px 24px 90px; }
-.page-sheet{ background:rgba(255,255,255,0.4); border:1px solid var(--paper-shadow); border-radius:3px;
-padding:36px 26px; box-shadow:0 10px 30px rgba(59,42,26,0.18);
-position:relative;
+.page-sheet{ background:rgba(255,255,255,0.62); border:1px solid var(--paper-shadow); border-radius:3px;
+padding:36px 26px; box-shadow:0 10px 30px rgba(59,42,26,0.22);
+position:relative; z-index:4;
 }
 .page-sheet::after{ content:''; position:absolute; left:0; top:0; bottom:0; width:6px;
 background:repeating-linear-gradient(180deg, var(--gold-leaf) 0 8px, transparent 8px 16px); opacity:.5; }
@@ -135,14 +136,14 @@ z-index:1;
 pointer-events:none;
 width:190px;
 height:245px;
-opacity:.92;
+opacity:.75;
 }
 /* FIX: each flower now has its OWN explicit position instead of a shared
    ".hero .flower-stage" rule that was overriding all four hero flowers
    onto the exact same spot (that's why some looked "empty"). */
-.rose-flower{ right:4%; bottom:7%; transform:rotate(9deg); }
-.memories-flower{ left:2%; top:18%; transform:rotate(-12deg) scale(.88); }
-.forever-flower{ right:2%; top:16%; transform:rotate(10deg) scale(.9); }
+.rose-flower{ right:-2%; bottom:4%; transform:rotate(9deg); }
+.memories-flower{ left:-3%; top:20%; transform:rotate(-12deg) scale(.8); }
+.forever-flower{ right:-3%; top:18%; transform:rotate(10deg) scale(.82); }
 .flower-stem{
 position:absolute;
 left:94px;
@@ -222,8 +223,8 @@ height:66px;
 border-radius:70% 30% 70% 30%;
 }
 .cosmos-flower .flower-head{ transform:scale(.08) rotate(-15deg); }
-.tulip-flower{ left:3%; bottom:10%; transform:rotate(-8deg) scale(.82); }
-.lavender-flower{ right:1%; top:22%; transform:rotate(14deg) scale(.72); }
+.tulip-flower{ left:-3%; bottom:12%; transform:rotate(-8deg) scale(.7); }
+.lavender-flower{ right:-2%; top:24%; transform:rotate(14deg) scale(.62); }
 .tulip-flower .flower-petal{
 background:linear-gradient(135deg,#e7a06c,#a9503e 85%);
 width:39px;
@@ -254,8 +255,8 @@ background:radial-gradient(circle at 35% 30%,#f4d1a0 0 15%,#b77b4b 25% 60%,#7950
 }
 .lavender-flower .flower-stem{ left:92px; top:68px; height:166px; transform:scaleY(.12) rotate(-8deg); }
 .lavender-flower.bloomed .flower-stem{ transform:scaleY(1) rotate(-8deg); }
-.sunflower-flower{ right:8%; bottom:4%; transform:rotate(8deg) scale(.68); }
-.forget-flower{ left:10%; top:8%; transform:rotate(-18deg) scale(.58); }
+.sunflower-flower{ right:-4%; bottom:0%; transform:rotate(8deg) scale(.56); }
+.forget-flower{ left:-2%; top:4%; transform:rotate(-18deg) scale(.48); }
 .marigold-flower{ left:7%; bottom:5%; transform:rotate(-10deg) scale(.7); }
 .camellia-flower{ left:8%; top:6%; transform:rotate(-12deg) scale(.62); }
 .sunflower-flower .flower-petal{
